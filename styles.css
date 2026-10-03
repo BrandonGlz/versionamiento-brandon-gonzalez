@@ -114,3 +114,27 @@ td {
     background-color: #FFF;
     color: #000;
 }
+
+.student-info {
+    margin-top: 15px;
+    padding: 10px 25px;
+    text-align: center;
+    background-color: rgba(30, 144, 255, 0.15);
+    border: 1px solid #1E90FF;
+    border-radius: 8px;
+}
+
+.student-info p {
+    margin: 4px 0;
+    color: #E3F2FD;
+}
+
+.student-info .activity {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2em;
+    color: #00BFFF;
+}
+
+.student-info .author {
+    font-size: 0.95em;
+}
