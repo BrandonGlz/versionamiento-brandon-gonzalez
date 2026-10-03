@@ -1,6 +1,6 @@
 body {
-    background: linear-gradient(#8412B0, #000);
-    font-family: 'Consolas', sans-serif;
+    background: linear-gradient(#0B3D91, #000);
+    font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -11,12 +11,13 @@ body {
 }
 
 h1 {
+    font-family: 'Montserrat', sans-serif;
     color: #FFF;
     text-align: center;
     margin-top: 20px;
     font-size: 2.5em;
     display: inline;
-    text-shadow: 0 0 10px #FC199A, 0 0 20px #FC199A, 0 0 30px #FC199A, 0 0 40px #FF007F, 0 0 50px #FF007F;
+    text-shadow: 0 0 10px #1E90FF, 0 0 20px #1E90FF, 0 0 30px #1E90FF, 0 0 40px #00BFFF, 0 0 50px #00BFFF;
 }
 
 .container {
@@ -31,7 +32,7 @@ h1 {
 
 .formContainer {
     text-align: center;
-    background-color: #FF007F;
+    background-color: #1565C0;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -56,8 +57,10 @@ input {
 }
 
 button {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
     background-color: #FFCC00;
-    color: #8412B0;
+    color: #0B3D91;
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
@@ -67,7 +70,7 @@ button {
 }
 
 button:hover {
-    background-color: #FC199A;
+    background-color: #1E90FF;
     color: #fff;
 }
 
@@ -84,13 +87,13 @@ th, td {
 }
 
 th {
-    background-color: #FC199A;
+    background-color: #1E90FF;
     color: white;
 }
 
 td {
     background-color: #00FFFF;
-    color: #8412B0;
+    color: #0B3D91;
 }
 
 .delete-btn {
@@ -110,4 +113,28 @@ td {
 #productsTable tbody tr {
     background-color: #FFF;
     color: #000;
+}
+
+.student-info {
+    margin-top: 15px;
+    padding: 10px 25px;
+    text-align: center;
+    background-color: rgba(30, 144, 255, 0.15);
+    border: 1px solid #1E90FF;
+    border-radius: 8px;
+}
+
+.student-info p {
+    margin: 4px 0;
+    color: #E3F2FD;
+}
+
+.student-info .activity {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2em;
+    color: #00BFFF;
+}
+
+.student-info .author {
+    font-size: 0.95em;
 }
