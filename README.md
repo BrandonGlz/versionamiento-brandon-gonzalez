@@ -60,7 +60,7 @@ Flujo:
 | 0 | README con materiales y plan de trabajo | Completado |
 | 1 | Pruebas funcionales manuales (mínimo 2) | Completado (4 pruebas) |
 | 2 | Contenerización con Docker | Completado (build + run local) |
-| 3 | Publicación en GitHub | Pendiente (token actual inválido) |
+| 3 | Publicación en GitHub | Completado (commit `9cb54ce` publicado) |
 | 4 | Despliegue en Render.com | Pendiente (requiere cuenta/URL) |
 | 5 | Pruebas automatizadas con Selenium (mínimo 2) | 3 aprobadas en local; pendiente contra Render |
 | 6 | Documentación en `docs/` (mínimo 2 páginas) | Completado (MD, DOCX y PDF) |
@@ -254,11 +254,11 @@ git push -u origin feature/mi-cambio
 
 ### Checklist de validación en GitHub
 
-- [ ] El repositorio contiene `index.html`, `styles.css`, `functions.js`, `Dockerfile` y `README.md`.
-- [ ] El historial de commits refleja el trabajo realizado.
-- [ ] El `README.md` describe el proyecto y los pasos de despliegue.
-- [ ] No se exponen credenciales ni tokens en el repositorio.
-- [ ] Se captura evidencia del repositorio (`docs/img/06-github-repo.png`).
+- [x] El repositorio contiene `index.html`, `styles.css`, `functions.js`, `Dockerfile` y `README.md`.
+- [x] El historial de commits refleja el trabajo realizado.
+- [x] El `README.md` describe el proyecto y los pasos de despliegue.
+- [x] No se exponen credenciales ni tokens en el repositorio.
+- [x] Se captura evidencia del repositorio (`docs/img/06-github-repo.png`).
 
 ---
 
@@ -523,7 +523,7 @@ docs/
 | `docs/img/03-manual-eliminar.png` | Prueba manual: eliminar producto | Completado |
 | `docs/img/04-manual-validacion.png` | Prueba manual: validación de datos | Completado |
 | `docs/img/05-manual-persistencia.png` | Prueba manual: persistencia tras recarga | Completado |
-| `docs/img/06-github-repo.png` | Repositorio en GitHub | Capturado (estado actual) |
+| `docs/img/06-github-repo.png` | Repositorio en GitHub | Completado |
 | `docs/img/07-docker-build.png` | Construcción de la imagen Docker | Completado |
 | `docs/img/08-docker-run.png` | Contenedor en ejecución | Completado |
 | `docs/img/09-render-servicio.png` | Servicio configurado en Render | Pendiente |
@@ -537,7 +537,7 @@ docs/
 - [x] Aplicación validada con al menos 2 pruebas manuales documentadas (4 realizadas).
 - [x] `Dockerfile` y `.dockerignore` creados y probados.
 - [x] Imagen Docker construida y contenedor verificado en local.
-- [ ] Código y Dockerfile subidos a GitHub (requiere credenciales válidas).
+- [x] Código y Dockerfile subidos a GitHub.
 - [ ] Servicio creado en Render y estado **Live**.
 - [ ] URL pública funcionando.
 - [ ] Al menos 2 pruebas Selenium ejecutadas contra la URL pública (3 aprobadas en local).
@@ -606,6 +606,14 @@ docs/
 - **Problema encontrado:** La portada inicial mostraba el centro negro porque el PNG de fondo tenía transparencia.
 - **Solución:** Se compuso el fondo sobre un lienzo blanco antes de dibujar el texto.
 - **Aprendizaje:** Es importante verificar la transparencia de las imágenes al generar documentos y PDF.
+
+### 2026-11-03 — Publicación en GitHub
+
+- **Qué hice:** Se publicó el commit `9cb54ce` en la rama `main` del repositorio remoto.
+- **Comando / código clave:** `git push origin main`
+- **Problema encontrado:** El token anterior del remoto había sido revocado (HTTP 401).
+- **Solución:** Se configuró el remoto sin token y se autenticó el push con un token válido de forma temporal, sin almacenarlo en el repositorio.
+- **Aprendizaje:** Nunca deben guardarse tokens en la URL del remoto ni en archivos versionados; conviene usar SSH o un credential helper.
 
 ### 2026-11-03 — Despliegue en Render (pendiente)
 
