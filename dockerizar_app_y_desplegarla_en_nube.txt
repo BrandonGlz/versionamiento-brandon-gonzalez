@@ -1,0 +1,69 @@
+
+
+
+Dockerizar Aplicación Web y Desplegarla en Nube
+
+
+1. Crear Dockerfile de la aplicación
+
+	Dockerfile:
+	# Definir la imagen base sobre la cual se contruirá el contenedor
+	FROM nginx:alpine
+
+	# Copiar los archivos de la aplicación al directorio predeterminado de Nginx
+	COPY . /usr/share/nginx/html
+
+	# Exponer el puerto 80 para el tráfico web
+	EXPOSE 80
+
+
+
+	1.5	(opcional) Probar aplicación en Docker local, abrir CMD en la terminal de la carpeta del proyecto (ANTES DE ESTO RECOMIENDO PARAR LOS CONTENDORES ACTIVOS EN DOCKER o utilizar el puerto 8081 en vez de 8080) y ejecutar los siguientes comandos:
+
+		# Construir la imagen de Docker localmente
+		docker build -t webapp .
+
+		# Ejecutar el contenedor en el puerto 8080
+		docker run -d -p 8080:80 webapp
+
+
+2. Preparar el repositorio de Git (abrir cmd y ejecutar)
+
+	git init
+	git add .
+	git commit -m "Configurar Dockerfile para la app web"
+
+
+3. Crear repositorio en GitHub (recomendación: colocarlo privado)
+
+4. Subir el código (los archivos) a GitHub
+
+	git branch -M main
+	git remote add origin https://github.com/usuario/repositorio
+	git push -u origin main
+
+
+5. Crear proyecto (Web Service) en Render.com 
+
+
+	5.5 Conectar repositorio de GitHub con Render
+	https://github.com/settings/installations/170220747
+
+6. Configurar proyecto y Desplegar la app en cloud
+
+IMPORTANTE: antes de hacer clic en "Deploy Web Service" (o su equivalente en el idioma que se esté utilizando), seleccionar la versión de Compute de "$0/month" para usar la versión gratuita de Render.com
+
+
+Hay más configuración por ejemplo agregar Variables de Entorno (se puede configurar cuando el proyecto ya esté creado también) y Secret Files, pero para esta app, con la configuración básica es más que suficiente
+
+
+7. Verificar que la app se haya desplegado correctamente
+
+	Para Eliminar o Suspender (parar) el Servicio/Proyecto, acceder al apartado de Settings
+
+	
+Bonus (Probar CI/CD): Lanzar un commit y un push (se puede hacer un cambio/mejora real o de ejemplo, es simplemente para probar la Integración Continua y Despliegue Continuo) y observar el despliegue en render.com
+
+git add .
+git commit -m "test: comprobar despliegue automatico con CI/CD"
+git push origin main

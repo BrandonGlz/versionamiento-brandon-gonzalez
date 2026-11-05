@@ -1,0 +1,11 @@
+.git
+.gitignore
+README.md
+docs
+tests
+*.png
+*.jpg
+*.jpeg
+*.txt
+*.docx
+*.pdf
