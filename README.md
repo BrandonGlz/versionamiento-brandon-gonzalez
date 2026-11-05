@@ -95,8 +95,9 @@ Flujo:
 ├── Arquitectura_Despliegue_En_La_Nube.jpg  # [Image 1] Diagrama de arquitectura
 ├── dockerizar_app_y_desplegarla_en_nube.txt # Guía de apoyo
 ├── Actividad_ Pruebas y liberación del desarrollo WEB.docx # Portada
-├── Dockerfile                          # Imagen Docker (por crear)
-├── .dockerignore                       # Exclusiones del contexto Docker (por crear)
+├── Dockerfile                          # Imagen Docker
+├── .dockerignore                       # Exclusiones del contexto Docker
+├── render.yaml                         # Configuración del servicio en Render
 ├── README.md                           # Bitácora de conocimiento
 ├── docs/                               # Documentación de la actividad (por crear)
 │   ├── documentacion.md                # Documento de 2+ páginas
@@ -267,7 +268,7 @@ git push -u origin feature/mi-cambio
 ### Configuración del Web Service
 
 1. Crear cuenta en [Render](https://render.com).
-2. **New → Web Service**.
+2. **New → Web Service** (o **New → Blueprint** si se usa `render.yaml`).
 3. Conectar el repositorio de GitHub:
    - https://github.com/settings/installations/170220747
 4. Configurar:
@@ -276,6 +277,8 @@ git push -u origin feature/mi-cambio
    - **Instance Type / Compute:** `$0/month` (plan gratuito) — **seleccionarlo antes de desplegar**.
 5. **Deploy Web Service** y esperar el build.
 6. Render asigna una URL pública del tipo `https://<nombre>.onrender.com`.
+
+El archivo `render.yaml` incluido en el repositorio define el servicio con `runtime: docker`, `plan: free`, rama `main` y `dockerfilePath: ./Dockerfile`, por lo que también puede desplegarse como Blueprint.
 
 > El material indica que para esta app la configuración básica es suficiente. Las variables de entorno y los Secret Files son opcionales y pueden agregarse después.
 
