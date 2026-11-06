@@ -10,7 +10,7 @@ Aplicación web estática de lista de productos que permite **agregar** y **elim
 **Fecha:** Tijuana, Baja California, 03 de noviembre del 2026
 
 **Repositorio:** https://github.com/BrandonGlz/versionamiento-brandon-gonzalez
-**Aplicación desplegada:** _(pendiente: URL de Render)_
+**Aplicación desplegada:** https://product-list-app-n8zk.onrender.com/
 
 ---
 
@@ -61,10 +61,10 @@ Flujo:
 | 1 | Pruebas funcionales manuales (mínimo 2) | Completado (4 pruebas) |
 | 2 | Contenerización con Docker | Completado (build + run local) |
 | 3 | Publicación en GitHub | Completado (commit `9cb54ce` publicado) |
-| 4 | Despliegue en Render.com | Pendiente (requiere cuenta/URL) |
-| 5 | Pruebas automatizadas con Selenium (mínimo 2) | 3 aprobadas en local; pendiente contra Render |
+| 4 | Despliegue en Render.com | Completado (Live en `product-list-app-n8zk.onrender.com`) |
+| 5 | Pruebas automatizadas con Selenium (mínimo 2) | Completado (3 aprobadas contra Render) |
 | 6 | Documentación en `docs/` (mínimo 2 páginas) | Completado (MD, DOCX y PDF) |
-| 7 | PDF final con portada, conclusión y enlace | Borrador generado; pendiente URL de Render |
+| 7 | PDF final con portada, conclusión y enlace | Completado (14 páginas) |
 
 ---
 
@@ -284,13 +284,16 @@ El archivo `render.yaml` incluido en el repositorio define el servicio con `runt
 
 ### Verificación
 
-- [ ] El servicio aparece como **Live** en Render.
-- [ ] La URL pública carga la aplicación.
-- [ ] Se puede agregar un producto.
-- [ ] Al recargar, el producto persiste en `localStorage`.
-- [ ] Se puede eliminar un producto.
-- [ ] La consola del navegador no muestra errores.
-- [ ] Se capturan evidencias del servicio y de la app desplegada.
+- [x] El servicio aparece como **Live** en Render.
+- [x] La URL pública carga la aplicación.
+- [x] Se puede agregar un producto.
+- [x] Al recargar, el producto persiste en `localStorage`.
+- [x] Se puede eliminar un producto.
+- [x] La consola del navegador no muestra errores.
+- [x] Se capturan evidencias del servicio y de la app desplegada.
+
+**URL pública:** https://product-list-app-n8zk.onrender.com/
+**Respuesta verificada:** HTTP 200 (`server: cloudflare`, `x-render-origin-server: nginx/1.31.8`).
 
 ### Bonus: CI/CD
 
@@ -398,12 +401,12 @@ BASE_URL=https://<nombre>.onrender.com pytest tests/ -v
 - [x] Selenium y pytest instalados.
 - [x] Chrome/Chromedriver disponible en el entorno.
 - [x] Las pruebas PA-01, PA-02 y PA-03 pasan contra el contenedor local.
-- [ ] Las pruebas PA-01 y PA-02 pasan contra la URL de Render.
+- [x] Las pruebas PA-01, PA-02 y PA-03 pasan contra la URL de Render.
 - [x] Se captura evidencia de la salida de `pytest` (`docs/img/11-selenium-tests.png`).
 
 ---
 
-## Resultados de la ejecución local
+## Resultados de la ejecución local y en la nube
 
 ### Docker
 
@@ -436,9 +439,26 @@ tests/test_app.py::test_add_product PASSED
 tests/test_app.py::test_delete_product PASSED
 tests/test_app.py::test_persistence_after_reload PASSED
 ========================= 3 passed in 3.95s =========================
+
+$ BASE_URL=https://product-list-app-n8zk.onrender.com/ python3 -m pytest tests/test_app.py -v
+tests/test_app.py::test_add_product PASSED
+tests/test_app.py::test_delete_product PASSED
+tests/test_app.py::test_persistence_after_reload PASSED
+========================= 3 passed in 5.27s =========================
 ```
 
 Evidencia: `docs/img/11-selenium-tests.png`.
+
+### Despliegue en Render
+
+| Verificación | Resultado |
+|---|---|
+| URL pública | https://product-list-app-n8zk.onrender.com/ |
+| Estado del servicio | Live |
+| Respuesta HTTP | 200 |
+| Servidor | `cloudflare` / `x-render-origin-server: nginx/1.31.8` |
+| Pruebas Selenium contra Render | 3 aprobadas en 5.27s |
+| Evidencias | `docs/img/09-render-servicio.png`, `docs/img/10-app-desplegada.png` |
 
 ---
 
@@ -487,15 +507,15 @@ docs/
 
 ### Checklist de documentación
 
-- [x] El documento tiene al menos 2 páginas (13 páginas).
+- [x] El documento tiene al menos 2 páginas (14 páginas).
 - [x] Incluye portada con los datos de la actividad.
 - [x] Incluye conclusión.
-- [ ] Incluye el enlace a la aplicación desplegada (placeholder pendiente).
-- [x] Incluye imágenes de evidencia locales.
+- [x] Incluye el enlace a la aplicación desplegada.
+- [x] Incluye imágenes de evidencia locales y del despliegue.
 - [x] Explica las decisiones técnicas.
 - [x] Se genera la versión PDF para entrega.
 - [x] Se adjuntan el PNG `[Image 1]` y el TXT de apoyo.
-- [ ] Se actualiza el PDF con la URL final de Render.
+- [x] Se actualiza el PDF con la URL final de Render.
 
 ---
 
@@ -529,9 +549,9 @@ docs/
 | `docs/img/06-github-repo.png` | Repositorio en GitHub | Completado |
 | `docs/img/07-docker-build.png` | Construcción de la imagen Docker | Completado |
 | `docs/img/08-docker-run.png` | Contenedor en ejecución | Completado |
-| `docs/img/09-render-servicio.png` | Servicio configurado en Render | Pendiente |
-| `docs/img/10-app-desplegada.png` | Aplicación accesible públicamente | Pendiente |
-| `docs/img/11-selenium-tests.png` | Salida de las pruebas automatizadas | Completado (local) |
+| `docs/img/09-render-servicio.png` | Servicio en Render respondiendo HTTP 200 | Completado |
+| `docs/img/10-app-desplegada.png` | Aplicación accesible públicamente | Completado |
+| `docs/img/11-selenium-tests.png` | Salida de las pruebas automatizadas contra Render | Completado |
 
 ---
 
@@ -541,16 +561,16 @@ docs/
 - [x] `Dockerfile` y `.dockerignore` creados y probados.
 - [x] Imagen Docker construida y contenedor verificado en local.
 - [x] Código y Dockerfile subidos a GitHub.
-- [ ] Servicio creado en Render y estado **Live**.
-- [ ] URL pública funcionando.
-- [ ] Al menos 2 pruebas Selenium ejecutadas contra la URL pública (3 aprobadas en local).
-- [x] Documento de `docs/` con 2+ páginas e imágenes (13 páginas).
+- [x] Servicio creado en Render y estado **Live**.
+- [x] URL pública funcionando.
+- [x] Al menos 2 pruebas Selenium ejecutadas contra la URL pública (3 aprobadas).
+- [x] Documento de `docs/` con 2+ páginas e imágenes (14 páginas).
 - [x] Portada y conclusión incluidas.
-- [ ] Enlace final a la aplicación incluido (placeholder pendiente).
+- [x] Enlace final a la aplicación incluido.
 - [x] PDF generado y verificado.
 - [x] PNG `[Image 1]` y TXT de apoyo adjuntos.
 - [x] Decisiones técnicas explicadas.
-- [ ] `README.md` actualizado con la URL final.
+- [x] `README.md` actualizado con la URL final.
 
 ---
 
@@ -618,13 +638,13 @@ docs/
 - **Solución:** Se configuró el remoto sin token y se autenticó el push con un token válido de forma temporal, sin almacenarlo en el repositorio.
 - **Aprendizaje:** Nunca deben guardarse tokens en la URL del remoto ni en archivos versionados; conviene usar SSH o un credential helper.
 
-### 2026-11-03 — Despliegue en Render (pendiente)
+### 2026-11-03 — Despliegue en Render
 
-- **Qué hice:** Definición de la configuración del servicio en Render.
+- **Qué hice:** Creación del Web Service en Render.com a partir del repositorio y verificación de la URL pública.
 - **Comando / código clave:** `Environment: Docker`, `Instance Type: $0/month`
-- **Problema encontrado:** El token actual del repositorio no es válido (HTTP 401), por lo que el push a GitHub está bloqueado.
-- **Solución:** Pendiente de generar un token nuevo o configurar SSH.
-- **Aprendizaje:** Render reconstruye la imagen en cada push a la rama configurada (CI/CD).
+- **Problema encontrado:** El Blueprint inicial falló por una ruta incorrecta; se resolvió usando el Web Service con el `Dockerfile` en la raíz.
+- **Solución:** El servicio quedó **Live** en https://product-list-app-n8zk.onrender.com/ y respondió HTTP 200.
+- **Aprendizaje:** Render reconstruye la imagen en cada push a la rama configurada (CI/CD) y el plan gratuito puede tardar en el primer arranque.
 
 ---
 
@@ -658,6 +678,6 @@ Generar un token nuevo o configurar SSH; el token anterior fue revocado por segu
 
 ## Conclusión
 
-_(Se completará en `docs/documentacion.md` y en el PDF final, una vez realizado el despliegue y las pruebas.)_
+La práctica recorrió el ciclo completo de una aplicación web: se validó su funcionamiento con pruebas manuales, se empaquetó en una imagen Docker con Nginx Alpine, se publicó en GitHub y se desplegó en Render.com. El servicio quedó disponible en https://product-list-app-n8zk.onrender.com/ y respondió con HTTP 200. Las tres pruebas automatizadas con Selenium se ejecutaron contra esa URL pública y pasaron correctamente.
 
-La práctica permitirá recorrer el ciclo completo de una aplicación web: validación local, empaquetado en una imagen Docker, versionado en GitHub, despliegue público en Render y verificación automatizada con Selenium, dejando evidencia documentada de cada etapa y de las decisiones técnicas adoptadas.
+La contenerización demostró ser una forma reproducible de entregar la aplicación, y el despliegue en la nube completó el ejercicio de liberación. El uso de `localStorage` simplificó la arquitectura al no requerir backend, con la limitación de que los datos son locales al navegador. Como trabajo futuro se propone agregar un backend con base de datos, pruebas de integración y un pipeline de CI/CD con GitHub Actions.

@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 BASE_URL = os.getenv("BASE_URL", "http://localhost:8080")
+WAIT = int(os.getenv("WAIT_TIMEOUT", "60"))
 IMG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "docs", "img")
 os.makedirs(IMG_DIR, exist_ok=True)
 
@@ -21,10 +22,10 @@ def driver():
     options.add_argument("--window-size=1400,900")
     browser = webdriver.Chrome(options=options)
     browser.get(BASE_URL)
-    WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.ID, "addProduct")))
+    WebDriverWait(browser, WAIT).until(EC.presence_of_element_located((By.ID, "addProduct")))
     browser.execute_script("localStorage.clear();")
     browser.refresh()
-    WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.ID, "addProduct")))
+    WebDriverWait(browser, WAIT).until(EC.presence_of_element_located((By.ID, "addProduct")))
     yield browser
     browser.quit()
 
@@ -37,7 +38,7 @@ def add_product(browser, name, price):
 
 def test_add_product(driver):
     add_product(driver, "Laptop", 15000)
-    row = WebDriverWait(driver, 30).until(
+    row = WebDriverWait(driver, WAIT).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "#productsTable tbody tr"))
     )
     assert "Laptop" in row.text
@@ -47,13 +48,13 @@ def test_add_product(driver):
 
 def test_delete_product(driver):
     add_product(driver, "Mouse", 250)
-    WebDriverWait(driver, 30).until(
+    WebDriverWait(driver, WAIT).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "#productsTable tbody tr"))
     )
-    WebDriverWait(driver, 30).until(
+    WebDriverWait(driver, WAIT).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, ".delete-btn"))
     ).click()
-    WebDriverWait(driver, 30).until(
+    WebDriverWait(driver, WAIT).until(
         lambda d: len(d.find_elements(By.CSS_SELECTOR, "#productsTable tbody tr")) == 0
     )
     driver.save_screenshot(os.path.join(IMG_DIR, "11-selenium-eliminar.png"))
@@ -61,11 +62,11 @@ def test_delete_product(driver):
 
 def test_persistence_after_reload(driver):
     add_product(driver, "Teclado", 500)
-    WebDriverWait(driver, 30).until(
+    WebDriverWait(driver, WAIT).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "#productsTable tbody tr"))
     )
     driver.refresh()
-    row = WebDriverWait(driver, 30).until(
+    row = WebDriverWait(driver, WAIT).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, "#productsTable tbody tr"))
     )
     assert "Teclado" in row.text

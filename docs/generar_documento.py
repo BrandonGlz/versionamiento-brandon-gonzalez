@@ -16,7 +16,7 @@ MAROON = RGBColor(0x6B, 0x1F, 0x3A)
 GOLD = RGBColor(0xB0, 0x8D, 0x57)
 BLUE = RGBColor(0x15, 0x65, 0xC0)
 GRAY = RGBColor(0x55, 0x55, 0x55)
-RENDER_URL = "https://TU-APP.onrender.com"
+RENDER_URL = "https://product-list-app-n8zk.onrender.com/"
 
 doc = Document()
 
@@ -425,18 +425,19 @@ add_bullets(
     ]
 )
 body(
-    "La URL pública del servicio es: " + RENDER_URL + ". Esta URL se utiliza en las pruebas automatizadas de Selenium y se actualiza en este documento una vez que el servicio queda en estado Live.",
+    "La URL pública del servicio es: " + RENDER_URL + ". El servicio quedó en estado Live y la aplicación respondió con código HTTP 200. Esta URL se utilizó en las pruebas automatizadas de Selenium.",
     justify=False,
 )
 body(
     "El material de apoyo también menciona la posibilidad de probar CI/CD: cada push a la rama main dispara una nueva construcción y despliegue en Render. Para suspender o eliminar el servicio se utiliza la sección Settings del proyecto."
 )
-add_image("arquitectura-despliegue.png", width=6.2, caption="Figura 9. Flujo de despliegue utilizado en Render.")
+add_image("09-render-servicio.png", width=6.2, caption="Figura 9. Servicio en Render respondiendo con HTTP 200.")
+add_image("10-app-desplegada.png", width=6.2, caption="Figura 10. Aplicación desplegada y accesible públicamente.")
 
 # ---------- 9. selenium ----------
 doc.add_heading("9. Pruebas automatizadas con Selenium", level=1)
 body(
-    "Se implementaron tres pruebas automatizadas con Selenium WebDriver, pytest y Chrome en modo headless. Las pruebas se ejecutaron contra la aplicación servida por el contenedor local y se configuraron para aceptar la URL de Render mediante la variable de entorno BASE_URL."
+    "Se implementaron tres pruebas automatizadas con Selenium WebDriver, pytest y Chrome en modo headless. Las pruebas se ejecutaron contra la aplicación desplegada en Render utilizando la variable de entorno BASE_URL, con esperas explícitas para tolerar el arranque en frío del plan gratuito."
 )
 add_table(
     ["ID", "Caso", "Descripción", "Resultado"],
@@ -472,16 +473,16 @@ def test_delete_product(driver):
 )
 body("Ejecución y resultado:")
 add_code(
-    """$ BASE_URL=http://localhost:8080 python3 -m pytest tests/test_app.py -v
+    """$ BASE_URL=https://product-list-app-n8zk.onrender.com/ python3 -m pytest tests/test_app.py -v
 tests/test_app.py::test_add_product PASSED
 tests/test_app.py::test_delete_product PASSED
 tests/test_app.py::test_persistence_after_reload PASSED
-========================= 3 passed in 3.95s ========================="""
+========================= 3 passed in 5.27s ========================="""
 )
 body(
-    "Las tres pruebas pasaron correctamente. Para la verificación sobre la aplicación desplegada se utiliza la misma suite cambiando BASE_URL por la URL de Render; se emplean esperas explícitas de hasta 30 segundos para tolerar el arranque en frío del plan gratuito."
+    "Las tres pruebas pasaron correctamente contra la URL pública de Render. Se emplearon esperas explícitas de hasta 60 segundos para tolerar el arranque en frío del plan gratuito; la ejecución completa tomó 5.27 segundos una vez que el servicio estuvo activo."
 )
-add_image("11-selenium-tests.png", width=6.2, caption="Figura 10. Resultado de las pruebas automatizadas con pytest y Selenium.")
+add_image("11-selenium-tests.png", width=6.2, caption="Figura 11. Resultado de las pruebas automatizadas contra la URL de Render.")
 
 # ---------- 10. decisiones ----------
 doc.add_heading("10. Decisiones técnicas", level=1)
@@ -510,7 +511,7 @@ body(
     "La contenerización con Nginx Alpine resultó adecuada para una aplicación estática: la imagen es pequeña, el arranque es rápido y el despliegue es reproducible. El uso de localStorage simplificó la arquitectura al eliminar la necesidad de un backend, aunque implica que los datos no se comparten entre navegadores o dispositivos. Esta limitación es aceptable para el objetivo de la actividad."
 )
 body(
-    "El despliegue en Render.com completa el ejercicio de liberación: el servicio se conecta al repositorio, construye la imagen a partir del Dockerfile y publica la aplicación en una URL accesible. Como trabajo futuro se propone agregar un backend con base de datos, pruebas de integración y un pipeline de CI/CD con GitHub Actions."
+    "El despliegue en Render.com completó el ejercicio de liberación: el servicio se conectó al repositorio, construyó la imagen a partir del Dockerfile y publicó la aplicación en https://product-list-app-n8zk.onrender.com/. Las tres pruebas automatizadas se ejecutaron contra esa URL pública y pasaron correctamente. Como trabajo futuro se propone agregar un backend con base de datos, pruebas de integración y un pipeline de CI/CD con GitHub Actions."
 )
 
 # ---------- 12. anexos ----------
@@ -526,7 +527,9 @@ add_bullets(
         "06-github-repo.png: repositorio en GitHub.",
         "07-docker-build.png: construcción de la imagen Docker.",
         "08-docker-run.png: contenedor en ejecución y verificación HTTP.",
-        "11-selenium-tests.png: salida de las pruebas automatizadas.",
+        "09-render-servicio.png: servicio en Render respondiendo con HTTP 200.",
+        "10-app-desplegada.png: aplicación desplegada en Render.",
+        "11-selenium-tests.png: salida de las pruebas automatizadas contra Render.",
         "localstorage-view.png: evidencia del localStorage.",
     ]
 )
